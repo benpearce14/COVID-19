@@ -9,4 +9,4 @@ if os.path.exists(data_path):
 print('Beginning data update...')
 url = 'https://pomber.github.io/covid19/timeseries.json'
 wget.download(url, '../data/world.json')
-print('Data has been updated')
+print('\nData has been updated')
