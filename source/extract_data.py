@@ -28,10 +28,6 @@ def extract_countries(country_list):
         deaths = data_deaths.loc[data_deaths[selection_var] == country_name]
         dates = confirmed.columns.values.tolist()[4:]
         
-        print(country_name)
-        print(population)
-        print(confirmed)
-
         if len(confirmed) > 1:
             if len(confirmed[confirmed['Province/State'].isnull()]) > 0:
                 confirmed = confirmed[confirmed['Province/State'].isnull()]
@@ -62,7 +58,7 @@ if __name__ == '__main__':
     country_list = ['France', 'Germany', 'United Kingdom', 'China', 'US', 'New York', \
                     'Korea, South', 'Italy', 'Spain']
     
-    country_list = ['France']
+    country_list = ['France', 'New York']
     countries_info = extract_countries(country_list)
     
     pr.plot_countries(countries_info)
