@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 
-import plotting_routines as pr
 
 '''Define dataframe N such that there exists;
 "Healthy" - Those that are suseptable and previously unaffected,
@@ -104,6 +103,8 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 
 if __name__ == '__main__':
 	print("Run as test code")
+	import plotting_routines as pr
+	
 	#Define test variables:
 	pop = 1e7
 	frac_fat = 0.01
