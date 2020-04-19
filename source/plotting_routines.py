@@ -127,13 +127,13 @@ def plot_weak(daystot, Nw):
 	
 def plot_country_evolution(daystot, first_death_day, countries_info, Nw):
 	x_vals = np.arange(0,daystot+1)
-	dates = np.arange(first_death_day,len(countries_info[2]))
+	dates = np.arange(0,len(countries_info[2])-first_death_day)
 	plt.figure()
 	plt.plot(dates, countries_info[3][first_death_day:], label='Confirmed Cases')
 	plt.plot(dates, countries_info[5][first_death_day:], label='Confirmed Deaths')
 	plt.plot(x_vals, Nw["Dead"], label='Modelled Deaths')
 	plt.title('%s' % countries_info[0])
-	plt.xlim(0,max(x_vals))
+	plt.xlim(0, max(dates))
 	plt.xlabel('Days')
 	plt.ylabel('N')
 	plt.legend(loc='best', fontsize=8)
