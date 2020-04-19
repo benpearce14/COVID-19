@@ -15,10 +15,10 @@ def extract_countries(country_list):
         country_name = country_list[i]
         
         if data_populations['Combined_Key'].values.tolist().count(country_name) > 0 :
-            selection_var = ['Province/State']
+            selection_var = 'Province/State'
             population = data_populations.loc[data_populations['Combined_Key'] == country_name]
         else:
-            selection_var = ['Country/Region']
+            selection_var = 'Country/Region'
             population = data_populations.loc[data_populations['Province/State'] == country_name]
             
         confirmed = data_confirmed.loc[data_confirmed[selection_var] == country_name]
