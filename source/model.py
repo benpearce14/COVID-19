@@ -41,7 +41,7 @@ Sig_C = 1.0/2.0
 D_Sw = 18.8 
 Sig_Sw = 1.0/2.0 
 D_Ss = 7.0
-Sig_Ss = 1.0/5.0
+Sig_Ss = 1.0/2.0
 
 def CreateDataframes(pop, frac_fat, c_0, days):
 	'''Create the required dataframes:
@@ -66,15 +66,17 @@ def CreateDataframes(pop, frac_fat, c_0, days):
 	Nw["Healthy"][0] = pop*frac_fat
 	return Ns, Nw, delta_Ns, delta_Nw
 
-def Convolve(delta_N, d, a, scale):
+def Gamma(x, mean, dev):
+	return stats.gamma.pdf(x, a=mean*dev, scale=1/dev)
+
+def Convolve(delta_N, d, mean, dev):
 	'''Implement function to smear the time period of individuals in different phases of the disease'''
-	tau = 500
+	tau = 300
 	sum = 0.0
 	for i in range(tau):
 		if d - i >= 0:
-			sum += stats.gamma.pdf(i, a=a, scale=scale)*delta_N[d-i]
+			sum += Gamma(i,mean,dev)*delta_N[d-i]
 	return sum
-
 
 def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	'''Alters Ns, Nw to model the progession of the disease by one day
@@ -94,16 +96,16 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	delta_Ns["Incubating"][d] = ( k_s * Ns["Healthy"][d] * ( Ns["Contagious"][d] + Ns["Symtomatic"][d] + hide_factor * (Nw["Contagious"][d] + Nw["Symtomatic"][d])) / pop_alive )
 	delta_Nw["Incubating"][d] = ( k_w * Nw["Healthy"][d] * ( Ns["Contagious"][d] + Ns["Symtomatic"][d] + hide_factor * (Nw["Contagious"][d] + Nw["Symtomatic"][d])) / pop_alive )
 
-	delta_Ns["Contagious"][d] = Convolve(delta_Ns["Incubating"], d, a=D_I*Sig_I, scale=1/Sig_I)
-	delta_Nw["Contagious"][d] = Convolve(delta_Nw["Incubating"], d, a=D_I*Sig_I, scale=1/Sig_I)      
+	delta_Ns["Contagious"][d] = Convolve(delta_Ns["Incubating"], d, mean=D_I, dev=Sig_I)
+	delta_Nw["Contagious"][d] = Convolve(delta_Nw["Incubating"], d, mean=D_I, dev=Sig_I)      
 
 	#Need to think about this transition... 
-	delta_Ns["Symtomatic"][d] = Convolve(delta_Ns["Contagious"], d, a=D_C*Sig_C, scale=1/Sig_C)      
-	delta_Nw["Symtomatic"][d] = Convolve(delta_Nw["Contagious"], d, a=D_C*Sig_C, scale=1/Sig_C)      
+	delta_Ns["Symtomatic"][d] = Convolve(delta_Ns["Contagious"], d, mean=D_C, dev=Sig_C)      
+	delta_Nw["Symtomatic"][d] = Convolve(delta_Nw["Contagious"], d, mean=D_C, dev=Sig_C)      
 
 	#Need to think about this transition...
-	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, a=D_Ss*Sig_Ss, scale=1/Sig_Ss)      
-	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, a=D_Sw*Sig_Sw, scale=1/Sig_Sw)      
+	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, mean=D_Ss, dev=Sig_Ss)      
+	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, mean=D_Sw, dev=Sig_Sw)      
 
 	Ns["Healthy"][d+1] = max(Ns["Healthy"][d] - delta_Ns["Incubating"][d],0)
 	Ns["Incubating"][d+1] = max(Ns["Incubating"][d] + delta_Ns["Incubating"][d] - delta_Ns["Contagious"][d],0)
@@ -124,8 +126,13 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 def RunModel(days=200,pop=66.4e6,frac_fat=0.01,c_0=0.402, k_s=2.84, k_w=2.84):
 	'''Run the model for the custom parameters provided'''
 	Ns, Nw, delta_Ns, delta_Nw = CreateDataframes(pop, frac_fat, c_0, daystot)
+	Karray=0
+	#Need to add K[d]
 	for d in range(0, daystot):
-		Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
+		if Karray==0:
+			Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
+		if Karray==1:
+			Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s[d], k_w[d])
 	return Ns, Nw
 
 
