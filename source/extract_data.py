@@ -22,6 +22,8 @@ def extract_countries(country_list):
             population = data_populations.loc[data_populations['Combined_Key'] == country_name]
             population = float(population.iloc[0,11])
             
+        print(data_confirmed[selection_var].values)
+        
         confirmed = data_confirmed.loc[data_confirmed[selection_var] == country_name]
         recovered = data_recovered.loc[data_recovered[selection_var] == country_name]
         deaths = data_deaths.loc[data_deaths[selection_var] == country_name]
