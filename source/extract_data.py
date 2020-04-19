@@ -68,7 +68,8 @@ def plot_countries(countries_info):
 
 if __name__ == '__main__':
     print("Run as test code")
-    country_list = ['France', 'Germany', 'United Kingdom', 'Korea, South', 'Italy', 'Spain']
+    country_list = ['France', 'Germany', 'United Kingdom', 'China', 'US', \
+                    'Korea, South', 'Italy', 'Spain']
     countries_info = extract_countries(country_list)
     #print(countries_info)
     plot_countries(countries_info)
