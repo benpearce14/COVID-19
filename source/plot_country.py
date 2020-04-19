@@ -50,6 +50,7 @@ print(len(country_confirmed))
 print(len(country_recovered))
 print(len(country_deaths))'''
 
+countries_info = extract_country(country_list)
 print(countries_info)
 
 x_vals = np.arange(0,len(dates))
