@@ -130,6 +130,12 @@ def RunModel(days=200,pop=66.4e6,frac_fat=0.01,c_0=0.402, k_s=2.84, k_w=2.84):
 	#Need to add K[d]
 	for d in range(0, daystot):
 		if Karray==0:
+			if d > 3:
+				k_s = 0.682
+				k_w = k_s
+			if d > 52:
+				k_s = 0.026
+				k_w = k_s
 			Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 		if Karray==1:
 			Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s[d], k_w[d])
