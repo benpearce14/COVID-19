@@ -35,9 +35,6 @@ def plot_countries_confirmed_million(countries_info):
 		print('No countries in list specified or error in list.')
 		return
 	for i in range(len(countries_info)):
-		print(countries_info[i][3])
-		print(countries_info[i][1])
-		print(countries_info[i][0])
 		plt.plot(x_vals, countries_info[i][3]*1.0e6/countries_info[i][1], label=countries_info[i][0])
 	plt.title('Confirmed Cases (per million)')
 	plt.xlim(0,max(x_vals))
