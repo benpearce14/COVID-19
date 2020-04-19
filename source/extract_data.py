@@ -12,12 +12,18 @@ def extract_countries(country_list):
     countries_info = []
 
     for i in range(len(country_list)):
-
+        
+        if data_populations['Combined_Key'].values.tolist().count(country_name) > 0 :
+            selection_var = ['Province/State']
+            population = data_populations.loc[data_populations['Combined_Key'] == country_name]
+        else:
+            selection_var = ['Country/Region']
+            population = data_populations.loc[data_populations['Province/State'] == country_name]
+            
         country_name = country_list[i]
-        population = data_populations.loc[data_populations['Combined_Key'] == country_name]
-        confirmed = data_confirmed.loc[data_confirmed['Country/Region'] == country_name]
-        recovered = data_recovered.loc[data_recovered['Country/Region'] == country_name]
-        deaths = data_deaths.loc[data_deaths['Country/Region'] == country_name]
+        confirmed = data_confirmed.loc[data_confirmed[selection_var] == country_name]
+        recovered = data_recovered.loc[data_recovered[selection_var] == country_name]
+        deaths = data_deaths.loc[data_deaths[selection_var] == country_name]
         population = float(population.iloc[0,11])
         dates = confirmed.columns.values.tolist()[4:]
 
@@ -48,7 +54,7 @@ if __name__ == '__main__':
     print("Run as test code")
     import plotting_routines as pr
     
-    country_list = ['France', 'Germany', 'United Kingdom', 'China', 'US', \
+    country_list = ['France', 'Germany', 'United Kingdom', 'China', 'US', 'New York', \
                     'Korea, South', 'Italy', 'Spain']
     countries_info = extract_countries(country_list)
     
