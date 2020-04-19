@@ -133,7 +133,7 @@ if __name__ == '__main__':
 	plt.xlabel('Days')
 	plt.ylabel('N')
 	plt.xlim(0, daystot)
-	plt.ylim([1,pop*1.1])
+	plt.ylim(1)
 	plt.legend(loc=2)
 	plt.savefig("../model_plots/strong_test.pdf")
 	plt.close()
@@ -148,10 +148,8 @@ if __name__ == '__main__':
 	plt.xlabel('Days')
 	plt.ylabel('N')
 	plt.xlim(0, daystot)
-	plt.ylim([1,pop*1.1])
+	plt.ylim(1)
 	plt.legend(loc=2)
 	plt.savefig("../model_plots/weak_test.pdf")
 	plt.close()
-
         print(Test run completed)
-
