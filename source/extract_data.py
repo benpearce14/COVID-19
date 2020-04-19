@@ -26,6 +26,9 @@ def extract_countries(country_list):
         deaths = data_deaths.loc[data_deaths[selection_var] == country_name]
         population = float(population.iloc[0,11])
         dates = confirmed.columns.values.tolist()[4:]
+        
+        print(country_name)
+        print(confirmed)
 
         if len(confirmed) > 1:
             if len(confirmed[confirmed['Province/State'].isnull()]) > 0:
