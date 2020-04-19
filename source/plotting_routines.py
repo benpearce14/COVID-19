@@ -125,7 +125,7 @@ def plot_weak(daystot, Nw):
 	print('Test run completed')
 	
 	
-def plot_country_evolution(daystot, first_death_day, countries_info, Nw)
+def plot_country_evolution(daystot, first_death_day, countries_info, Nw):
 	x_vals = np.arange(0,len(daystot))
 	dates = np.arange(first_death_day,len(countries_info[i][2]))
 	plt.figure()
