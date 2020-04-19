@@ -50,7 +50,7 @@ def extract_countries(country_list):
         else:
             if len(confirmed) > 1:
                 confirmed = confirmed.sum().tolist()[4:]
-                if confirmed['Country/Region'].values.contains('US'):
+                if confirmed['Country/Region'].tolist().contains('US'):
                     recovered = [0]*len(dates)
                 else:
                     recovered = recovered.sum().tolist()[4:]
