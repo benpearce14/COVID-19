@@ -3,7 +3,7 @@
 
 import matplotlib.pyplot as plt
 import seaborn as sns
-import numpyas as np
+import numpy as np
 
 
 def plot_countries(countries_info):
