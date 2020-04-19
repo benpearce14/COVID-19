@@ -13,7 +13,7 @@ pop = countries_info[0][1]
 first_death_day = next(x[0] for x in enumerate(countries_info[0][5]) if x[1] > 0.0)
 
 frac_fat = 0.01
-c_0 = 10
+c_0 = 100
 k_s = 2.84
 k_w = k_s # For now
 
