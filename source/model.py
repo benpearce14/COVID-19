@@ -1,4 +1,5 @@
 import numpy as np
+import scipy.stats as stats
 import pandas as pd
 
 
@@ -22,16 +23,25 @@ k_s: Some arbitary lockdown parameter for the strong population
 k_w: Some arbitary lockdown parameter for the weak population
 
 Disease parameters: (Global)
-D_I: The mean time for incubation period of the disease,
-D_C: The mean time for contagious period of the disease,
-D_S: The mean time for symptomatic period of the disease,
+D_I: The 'mean' time for incubation period of the disease,
+D_C: The 'mean' time for contagious period of the disease,
+D_Ss: The 'mean' time for symptomatic period of the disease for the strong pop,
+D_Sw: The 'mean' time for symptomatic period of the disease for the weak pop,
+
+Sig_I: The 'dev' time for incubation period of the disease,
+Sig_C: The 'dev' time for contagious period of the disease,
+Sig_Ss: The 'dev' time for symptomatic period of the disease for the strong pop,
+Sig_Sw: The 'dev' time for symptomatic period of the disease for the weak pop,
 '''
 
-D_I = 5
-D_C = 0
-D_S = 5
-
-
+D_I = 5.1 #Known
+Sig_I= 0.86 #Known
+D_C = 1 
+Sig_C = 1 
+D_Sw = 18.8 #Known
+Sig_Sw = 0.45 #Known
+D_Ss = 7
+Sig_Ss = 1
 
 def CreateDataframes(pop, frac_fat, c_0, days):
 	'''Create the required dataframes:
@@ -56,6 +66,15 @@ def CreateDataframes(pop, frac_fat, c_0, days):
 	Nw["Healthy"][0] = pop*frac_fat
 	return Ns, Nw, delta_Ns, delta_Nw
 
+def Convolve(delta_N, d, a, scale):
+	'''Implement function to smear the time period of individuals in different phases of the disease'''
+	tau = 200
+	sum=0
+	for i in range(tau):
+		if d - i >= 0:
+			sum += stats.gamma.pdf(i, a=a, scale=scale)*delta_N[d-i]
+	return sum
+
 
 def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	'''Alters Ns, Nw to model the progession of the disease by one day
@@ -75,17 +94,16 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	delta_Ns["Incubating"][d] = ( k_s * Ns["Healthy"][d] * ( Ns["Contagious"][d] + Ns["Symtomatic"][d] + hide_factor * (Nw["Contagious"][d] + Nw["Symtomatic"][d])) / pop_alive )
 	delta_Nw["Incubating"][d] = ( k_w * Nw["Healthy"][d] * ( Ns["Contagious"][d] + Ns["Symtomatic"][d] + hide_factor * (Nw["Contagious"][d] + Nw["Symtomatic"][d])) / pop_alive )
 
-	if d - D_I >= 0:
-		delta_Ns["Contagious"][d] = ( delta_Ns["Incubating"][d - D_I] )
-		delta_Nw["Contagious"][d] = ( delta_Nw["Incubating"][d - D_I] )
+	delta_Ns["Contagious"][d] = Convolve(delta_Ns["Incubating"], d, mean=D_I, dev=Sig_I)
+	delta_Nw["Contagious"][d] = Convolve(delta_Nw["Incubating"], d, mean=D_I, dev=Sig_I)      
 
-	if d - D_C >= 0:
-		delta_Ns["Symtomatic"][d] = ( delta_Ns["Contagious"][d -D_C] )
-		delta_Nw["Symtomatic"][d] = ( delta_Nw["Contagious"][d -D_C] )
+	#Need to think about this transition... 
+	delta_Ns["Symtomatic"][d] = Convolve(delta_Ns["Contagious"], d, mean=D_C, dev=Sig_C)      
+	delta_Nw["Symtomatic"][d] = Convolve(delta_Nw["Contagious"], d, mean=D_C, dev=Sig_C)      
 
-	if d - D_S >= 0:
-		delta_Ns["Recovered"][d] = ( delta_Ns["Symtomatic"][d -D_S] )
-		delta_Nw["Dead"][d] = ( delta_Nw["Symtomatic"][d -D_S] )
+	#Need to think about this transition...
+	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, mean=D_Ss, dev=Sig_Ss)      
+	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, mean=D_Ss, dev=Sig_Sw)      
 
 
 	#print(delta_Ns_Incubating, delta_Ns_Contagious, delta_Ns_Symtomatic, delta_Ns_Recovered)
@@ -120,7 +138,5 @@ if __name__ == '__main__':
 	#Define test variables:
 	daystot=200
 	Ns, Nw = RunModel(days=daystot)
-	print(Ns)
-
 	pr.plot_strong(daystot, Ns)
 	pr.plot_weak(daystot, Nw)
