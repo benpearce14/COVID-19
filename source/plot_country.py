@@ -7,12 +7,15 @@ import sys
 
 def extract_countries(country_list):
     '''Extract raw data for given list of countries'''
-    data_populations = pd.read_csv('../data/populations.csv')
-    data_confirmed = pd.read_csv('../data/confirmed.csv')
-    data_recovered = pd.read_csv('../data/recovered.csv')
-    data_deaths = pd.read_csv('../data/deaths.csv')
+    
+    data_populations = pd.read_csv('../raw_data/populations.csv')
+    data_confirmed = pd.read_csv('../raw_data/confirmed.csv')
+    data_recovered = pd.read_csv('../raw_data/recovered.csv')
+    data_deaths = pd.read_csv('../raw_data/deaths.csv')
     countries_info = []
+    
     for i in range(len(country_list)):
+        
         country_name = country_list[i]
         population = data_populations.loc[data_populations['Combined_Key'] == country_name]
         confirmed = data_confirmed.loc[data_confirmed['Country/Region'] == country_name]
@@ -20,6 +23,7 @@ def extract_countries(country_list):
         deaths = data_deaths.loc[data_deaths['Country/Region'] == country_name]
         population = int(population.iloc[0,11])
         dates = confirmed.columns.values.tolist()[4:]
+        
         if len(confirmed) > 1:
             if len(confirmed[confirmed['Province/State'].isnull()]) > 0:
                 confirmed = confirmed[confirmed['Province/State'].isnull()]
@@ -36,12 +40,15 @@ def extract_countries(country_list):
             confirmed = confirmed.iloc[0,4:].values
             recovered = recovered.iloc[0,4:].values
             deaths = deaths.iloc[0,4:].values
+            
         countries_info.append([country_name, population, dates, confirmed, recovered, deaths])
+   
     return countries_info
 
 
 def plot_countries(countries_info):
     '''Plot raw data for given list of countries'''
+    
     for i in range(len(countries_info)):
         dates = countries_info[i][2]
         x_vals = np.arange(0,len(dates))
