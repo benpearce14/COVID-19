@@ -152,4 +152,4 @@ if __name__ == '__main__':
 	plt.legend(loc=2)
 	plt.savefig("../model_plots/weak_test.pdf")
 	plt.close()
-	print(Test run completed)
+	print('Test run completed')
