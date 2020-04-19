@@ -14,7 +14,8 @@ def extract_country(country_list):
     data_deaths = pd.read_csv('../data/deaths.csv')
     countries_info = []
 
-    for i in range(len(country_list)):
+    for i in range(len(country_list)-1):
+        country_name = country_list[i]
         population = data_populations.loc[data_populations['Combined_Key'] == country_name]
         confirmed = data_confirmed.loc[data_confirmed['Country/Region'] == country_name]
         recovered = data_recovered.loc[data_recovered['Country/Region'] == country_name]
