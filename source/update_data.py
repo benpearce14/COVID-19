@@ -19,8 +19,8 @@ wget.download('%s/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv
 wget.download('%s/csse_covid_19_time_series/time_series_covid19_deaths_US.csv' % url, '../raw_data/deaths_us.csv')
 
 all_confirmed = []
-confirmed_global = pd.read_csv('../raw_data/confirmed.csv', sort=False)
-confirmed_us = pd.read_csv('../raw_data/confirmed_us.csv', sort=False)
+confirmed_global = pd.read_csv('../raw_data/confirmed.csv')
+confirmed_us = pd.read_csv('../raw_data/confirmed_us.csv')
 all_confirmed.append(confirmed_global)
 all_confirmed.append(confirmed_us)
 merged_confirmed = pd.concat(all_confirmed, ignore_index=True, sort=False)
