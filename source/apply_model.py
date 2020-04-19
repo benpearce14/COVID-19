@@ -21,8 +21,8 @@ k_w = k_s # For now
 daystot = 120
 Ns, Nw, delta_Ns, delta_Nw = md.CreateDataframes(pop, frac_fat, c_0, daystot)
 for d in range(0, daystot):
-	if d > 3:
-		k_s = 0.6
+	if d > 40:
+		k_s = 0.25
 		k_w = k_s
 	Ns, Nw, delta_Ns, delta_Nw = md.PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 
