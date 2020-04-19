@@ -24,6 +24,7 @@ def plot_countries(countries_info):
 		plt.savefig('../data_plots/%s.pdf' % countries_info[i][0])
 		plt.close()
 	
+	
 def plot_strong(daystot, Ns):
 	plt.figure()
 	plt.plot(np.arange(0,daystot+1), Ns["Healthy"], label='Healthy', color='green')
@@ -36,6 +37,7 @@ def plot_strong(daystot, Ns):
 	plt.ylabel('N')
 	plt.xlim(0, daystot)
 	plt.ylim(1)
+	plt.title('Strong Population')
 	plt.legend(loc='best', fontsize=8)
 	plt.savefig("../model_plots/strong_test.pdf")
 	plt.close()
@@ -53,6 +55,7 @@ def plot_weak(daystot, Nw):
 	plt.ylabel('N')
 	plt.xlim(0, daystot)
 	plt.ylim(1)
+	plt.tile('Weak Population')
 	plt.legend(loc='best', fontsize=8)
 	plt.savefig("../model_plots/weak_test.pdf")
 	plt.close()
