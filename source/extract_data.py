@@ -33,23 +33,18 @@ def extract_countries(country_list):
         print(country_name)
         print(confirmed)
         
-        if selection_var == 'Country/Region':
-            if len(confirmed) > 1:
-                if len(confirmed[confirmed['Province/State'].isnull()]) > 0:
-                    confirmed = confirmed[confirmed['Province/State'].isnull()]
-                    recovered = recovered[recovered['Province/State'].isnull()]
-                    deaths = deaths[deaths['Province/State'].isnull()]
-                    confirmed = confirmed.iloc[0,4:].values
-                    recovered = recovered.iloc[0,4:].values
-                    deaths = deaths.iloc[0,4:].values
-                else:
-                    confirmed = confirmed.sum().tolist()[4:]
-                    recovered = recovered.sum().tolist()[4:]
-                    deaths = deaths.sum().tolist()[4:]
-            else:
+        if len(confirmed) > 1:
+            if len(confirmed[confirmed[selection_var].isnull()]) > 0:
+                confirmed = confirmed[confirmed[selection_var].isnull()]
+                recovered = recovered[recovered[selection_var].isnull()]
+                deaths = deaths[deaths[selection_var].isnull()]
                 confirmed = confirmed.iloc[0,4:].values
                 recovered = recovered.iloc[0,4:].values
                 deaths = deaths.iloc[0,4:].values
+            else:
+                confirmed = confirmed.sum().tolist()[4:]
+                recovered = recovered.sum().tolist()[4:]
+                deaths = deaths.sum().tolist()[4:]
         else:
             confirmed = confirmed.iloc[0,4:].values
             recovered = recovered.iloc[0,4:].values
