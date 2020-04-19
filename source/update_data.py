@@ -22,9 +22,9 @@ all_confirmed = []
 confirmed_global = pd.read_csv('../raw_data/confirmed.csv')
 confirmed_us = pd.read_csv('../raw_data/confirmed_us.csv')
 
-confirmed_us.pd.rename(columns = {'Country_Region':'Country/Region'}, inplace = True) 
-confirmed_us.pd.rename(columns = {'Province_State':'Province/State'}, inplace = True) 
-confirmed_us.pd.rename(columns = {'Long_':'Long'}, inplace = True) 
+confirmed_us.rename(columns = {'Country_Region':'Country/Region'}, inplace = True) 
+confirmed_us.rename(columns = {'Province_State':'Province/State'}, inplace = True) 
+confirmed_us.rename(columns = {'Long_':'Long'}, inplace = True) 
 
 confirmed_us = confirmed_us.filter(confirmed_global.columns.tolist())
 all_confirmed.append(confirmed_global)
