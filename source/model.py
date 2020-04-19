@@ -30,6 +30,7 @@ D_C: The mean time for contagious period of the disease,
 D_S: The mean time for symptomatic period of the disease,
 ''' 
 
+
 def CreateDataframes(pop, frac_fat, c_0, days):
 	'''Create the required dataframes:
 		Ns: The strong population dataframe,
@@ -52,6 +53,7 @@ def CreateDataframes(pop, frac_fat, c_0, days):
 
 	Nw["Healthy"][0] = pop*frac_fat
 	return Ns, Nw, delta_Ns, delta_Nw
+
 
 def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	'''Alters Ns, Nw to model the progession of the disease by one day
@@ -102,7 +104,6 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	return Ns, Nw, delta_Ns, delta_Nw
 
 
-
 if __name__ == '__main__':
 	print("Run as test code")
 	#Define test variables:
@@ -121,8 +122,8 @@ if __name__ == '__main__':
 	for d in range(0, daystot):
 		Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 
-	print(Ns)
-	print(Nw)
+	#print(Ns)
+	#print(Nw)
 
 	pyplot.figure()
 	pyplot.close()
@@ -138,7 +139,7 @@ if __name__ == '__main__':
 	pyplot.ylabel('Population')
 	pyplot.ylim([1,pop*1.1])
 	pyplot.legend()
-	pyplot.savefig("modelplots/StrongTest.pdf")
+	pyplot.savefig("../model_plots/StrongTest.pdf")
 	pyplot.close()
 
 	pyplot.figure()
@@ -153,5 +154,5 @@ if __name__ == '__main__':
 	pyplot.ylim([1,pop*1.1])
 	pyplot.legend()
 	pyplot.legend()
-	pyplot.savefig("modelplots/WeakTest.pdf")
+	pyplot.savefig("../model_plots/WeakTest.pdf")
 	pyplot.close()
