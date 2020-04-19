@@ -27,7 +27,7 @@ D_C: The mean time for contagious period of the disease,
 D_S: The mean time for symptomatic period of the disease,
 '''
 
-D_I = 5.1
+D_I = 5
 D_C = 4
 D_S = 1
 
