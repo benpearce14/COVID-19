@@ -42,7 +42,7 @@ def extract_countries(country_list):
 
 def plot_countries(countries_info):
     '''Plot raw data for given list of countries'''
-    for i in range(len(countries_info):
+    for i in range(len(countries_info)):
         dates = countries_info[i][2]
         x_vals = np.arange(0,len(dates))
         plt.figure()
