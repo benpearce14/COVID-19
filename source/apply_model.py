@@ -11,6 +11,7 @@ countries_info = ed.extract_countries(country_list)
     
 pop = countries_info[0][1]
 first_death_day = next((i for i, x in enumerate(countries_info[0][5]) if x), None)
+print(first_death_day)
 
 frac_fat = 0.01
 c_0 = 1
