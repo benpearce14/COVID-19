@@ -38,7 +38,8 @@ def extract_countries(country_list):
             recovered = recovered.iloc[0,4:].values
             deaths = deaths.iloc[0,4:].values
 
-        countries_info.append([country_name, population, dates, confirmed, recovered, deaths])
+        countries_info.append([country_name, population, np.asarray(dates), np.asarray(confirmed), \
+                               np.asarray(recovered), np.asarray(deaths)])
 
     return countries_info
 
