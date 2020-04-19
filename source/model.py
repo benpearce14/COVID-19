@@ -36,12 +36,12 @@ Sig_Sw: The 'dev' time for symptomatic period of the disease for the weak pop,
 
 D_I = 5.1 #Known
 Sig_I= 0.86 #Known
-D_C = 7
-Sig_C = 1/2
+D_C = 7.0
+Sig_C = 1.0/2.0
 D_Sw = 18.8 
-Sig_Sw = 1/2 
-D_Ss = 7
-Sig_Ss = 1/20
+Sig_Sw = 1.0/2.0 
+D_Ss = 7.0
+Sig_Ss = 1.0/2.0
 
 def CreateDataframes(pop, frac_fat, c_0, days):
 	'''Create the required dataframes:
