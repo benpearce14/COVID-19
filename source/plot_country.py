@@ -55,14 +55,15 @@ def plot_countries(countries_info):
         plt.ylabel('N')
         plt.legend(loc=2)
         plt.semilogy()
-        plt.savefig('%s.pdf' % countries_info[i][0])
+        plt.savefig('../data_plots/%s.pdf' % countries_info[i][0])
         plt.close()
-                   
-    
+
+
 if __name__ == '__main__':
     print("Run as test code")
     country_list = ["France", "Germany"]
     countries_info = extract_countries(country_list)
-    print(countries_info)
+    #print(countries_info)
     plot_countries(countries_info)
     print("Test run completed")
+
