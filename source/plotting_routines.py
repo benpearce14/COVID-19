@@ -36,7 +36,7 @@ def plot_countries_confirmed_million(countries_info):
 		return
 	for i in range(len(countries_info)):
 		plt.plot(x_vals, countries_info[i][3]*1.0e6/countries_info[i][1], label=countries_info[i][0])
-		plt.title('Confirmed Cases (per million)')
+	plt.title('Confirmed Cases (per million)')
 	plt.xlim(0,max(x_vals))
 	plt.xlabel('Days')
 	plt.ylabel('N')
@@ -57,7 +57,7 @@ def plot_countries_recovered_million(countries_info):
 		return
 	for i in range(len(countries_info)):
 		plt.plot(x_vals, countries_info[i][4]*1.0e6/countries_info[i][1], label=countries_info[i][0])
-		plt.title('Recoveries (per million)')
+	plt.title('Recoveries (per million)')
 	plt.xlim(0,max(x_vals))
 	plt.xlabel('Days')
 	plt.ylabel('N')
@@ -78,7 +78,7 @@ def plot_countries_deaths_million(countries_info):
 		return
 	for i in range(len(countries_info)):
 		plt.plot(x_vals, countries_info[i][5]*1.0e6/countries_info[i][1], label=countries_info[i][0])
-		plt.title('Deaths (per million)')
+	plt.title('Deaths (per million)')
 	plt.xlim(0,max(x_vals))
 	plt.xlabel('Days')
 	plt.ylabel('N')
@@ -118,7 +118,7 @@ def plot_weak(daystot, Nw):
 	plt.ylabel('N')
 	plt.xlim(0, daystot)
 	plt.ylim(1)
-	plt.tile('Weak Population')
+	plt.title('Weak Population')
 	plt.legend(loc='best', fontsize=8)
 	plt.savefig("../model_plots/weak_test.pdf")
 	plt.close()
