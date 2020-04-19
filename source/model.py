@@ -28,8 +28,8 @@ D_S: The mean time for symptomatic period of the disease,
 '''
 
 D_I = 5
-D_C = 4
-D_S = 1
+D_C = 5
+D_S = 0
 
 
 def CreateDataframes(pop, frac_fat, c_0, days):
