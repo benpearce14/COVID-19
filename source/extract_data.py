@@ -18,7 +18,7 @@ def extract_countries(country_list):
         confirmed = data_confirmed.loc[data_confirmed['Country/Region'] == country_name]
         recovered = data_recovered.loc[data_recovered['Country/Region'] == country_name]
         deaths = data_deaths.loc[data_deaths['Country/Region'] == country_name]
-        population = int(population.iloc[0,11])
+        population = float(population.iloc[0,11])
         dates = confirmed.columns.values.tolist()[4:]
 
         if len(confirmed) > 1:
