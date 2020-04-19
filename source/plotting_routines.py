@@ -6,27 +6,25 @@ import seaborn as sns
 
 
 def plot_countries(countries_info):
-    '''Plot raw data for given list of countries'''
-
-    for i in range(len(countries_info)):
-        dates = countries_info[i][2]
-        x_vals = np.arange(0,len(dates))
-        plt.figure()
-        plt.plot(x_vals, countries_info[i][3], label='Confirmed')
-        plt.plot(x_vals, countries_info[i][4], label='Recovered')
-        plt.plot(x_vals, countries_info[i][5], label='Deaths')
-        plt.title('%s' % countries_info[i][0])
-        plt.xlim(0,max(x_vals))
-        plt.xlabel('Days')
-        plt.ylabel('N')
-        plt.legend(loc=2)
-        plt.semilogy()
-        plt.savefig('../data_plots/%s.pdf' % countries_info[i][0])
-        plt.close()
-        
-
+	'''Plot raw data for given list of countries'''
+	for i in range(len(countries_info)):
+		dates = countries_info[i][2]
+		x_vals = np.arange(0,len(dates))
+		plt.figure()
+		plt.plot(x_vals, countries_info[i][3], label='Confirmed')
+		plt.plot(x_vals, countries_info[i][4], label='Recovered')
+		plt.plot(x_vals, countries_info[i][5], label='Deaths')
+		plt.title('%s' % countries_info[i][0])
+		plt.xlim(0,max(x_vals))
+		plt.xlabel('Days')
+		plt.ylabel('N')
+		plt.legend(loc=2, fontsize=8)
+		plt.semilogy()
+		plt.savefig('../data_plots/%s.pdf' % countries_info[i][0])
+		plt.close()
+	
 def plot_strong(daystot, Ns):
-  plt.figure()
+	plt.figure()
 	plt.plot(np.arange(0,daystot+1), Ns["Healthy"], label='Healthy', color='green')
 	plt.plot(np.arange(0,daystot+1), Ns["Incubating"], label='Incubating', color='orange')
 	plt.plot(np.arange(0,daystot+1), Ns["Contagious"], label='Contagious', color='pink')
@@ -58,5 +56,3 @@ def plot_weak(daystot, Ns):
 	plt.savefig("../model_plots/weak_test.pdf")
 	plt.close()
 	print('Test run completed')
-  
-  
