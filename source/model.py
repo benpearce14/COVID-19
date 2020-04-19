@@ -41,7 +41,7 @@ Sig_C = 1.0/2.0
 D_Sw = 18.8 
 Sig_Sw = 1.0/2.0 
 D_Ss = 7.0
-Sig_Ss = 1.0/2.0
+Sig_Ss = 1.0/5.0
 
 def CreateDataframes(pop, frac_fat, c_0, days):
 	'''Create the required dataframes:
@@ -68,15 +68,11 @@ def CreateDataframes(pop, frac_fat, c_0, days):
 
 def Convolve(delta_N, d, a, scale):
 	'''Implement function to smear the time period of individuals in different phases of the disease'''
-	tau = 1000
-	sum=0
-	cumsum=0
+	tau = 500
+	sum = 0.0
 	for i in range(tau):
 		if d - i >= 0:
 			sum += stats.gamma.pdf(i, a=a, scale=scale)*delta_N[d-i]
-			cumsum += stats.gamma.pdf(i, a=a, scale=scale)
-			if cumsum > 0.999:
-				break
 	return sum
 
 
