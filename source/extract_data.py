@@ -48,9 +48,17 @@ def extract_countries(country_list):
                 recovered = recovered.iloc[0,4:].values
                 deaths = deaths.iloc[0,4:].values     
         else:
-            confirmed = confirmed.iloc[0,4:].values
-            recovered = recovered.iloc[0,4:].values
-            deaths = deaths.iloc[0,4:].values
+            if len(confirmed) > 1:
+                confirmed = confirmed.sum().tolist()[4:]
+                if confirmed['Country/Region'] == 'US':
+                    recovered = [0]*len(dates)
+                else:
+                    recovered = recovered.sum().tolist()[4:]
+                deaths = deaths.sum().tolist()[4:]
+            else:
+                confirmed = confirmed.iloc[0,4:].values
+                recovered = recovered.iloc[0,4:].values
+                deaths = deaths.iloc[0,4:].values
 
         countries_info.append([country_name, population, np.asarray(dates), np.asarray(confirmed), \
                                np.asarray(recovered), np.asarray(deaths)])
