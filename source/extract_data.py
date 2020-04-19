@@ -68,7 +68,7 @@ if __name__ == '__main__':
     country_list = ['France', 'Germany', 'United Kingdom', 'China', 'US', 'New York', \
                     'Korea, South', 'Italy', 'Spain']
     
-    country_list = ['France', 'New York']
+    country_list = ['New York', 'France']
     countries_info = extract_countries(country_list)
     
     pr.plot_countries(countries_info)
