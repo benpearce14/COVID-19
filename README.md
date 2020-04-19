@@ -9,6 +9,11 @@ Data is taken from the 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Reposito
 
 Please see reference/references.pdf for the aditional details.
 
+Info:
+-----
+
+1. Day 0 = March 22nd 2020.
+
 Usage:
 ------
 
