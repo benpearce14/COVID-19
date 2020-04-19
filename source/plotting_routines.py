@@ -41,7 +41,7 @@ def plot_strong(daystot, Ns):
 	plt.close()
 
 
-def plot_weak(daystot, Ns):
+def plot_weak(daystot, Nw):
 	plt.figure()
 	plt.plot(np.arange(0,daystot+1), Nw["Healthy"], label='Healthy', color='green')
 	plt.plot(np.arange(0,daystot+1), Nw["Incubating"], label='Incubating', color='orange')
