@@ -136,7 +136,7 @@ def RunModel(days=200,pop=66.4e6,frac_fat=0.01,c_0=0.402, k_s=2.84, k_w=2.84):
 if __name__ == '__main__':
 	print("Run as test code")
 	import plotting_routines as pr
-	
+
 	#Define test variables:
 	daystot=200
 	Ns, Nw = RunModel(days=daystot)

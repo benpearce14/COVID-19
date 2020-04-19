@@ -24,7 +24,7 @@ def plot_countries(countries_info):
 		plt.savefig('../data_plots/%s.pdf' % countries_info[i][0])
 		plt.close()
 
-		
+
 def plot_countries_confirmed_million(countries_info):
 	'''Plot raw data of confirmed cases per million of population for a list of countries'''
 	try:
@@ -44,8 +44,8 @@ def plot_countries_confirmed_million(countries_info):
 	plt.semilogy()
 	plt.savefig('../data_plots/confirmed_per_million.pdf')
 	plt.close()
-	
-	
+
+
 def plot_countries_recovered_million(countries_info):
 	'''Plot raw data of recoveries per million of population for a list of countries'''
 	try:
@@ -65,7 +65,7 @@ def plot_countries_recovered_million(countries_info):
 	plt.semilogy()
 	plt.savefig('../data_plots/recovered_per_million.pdf')
 	plt.close()
-	
+
 
 def plot_countries_deaths_million(countries_info):
 	'''Plot raw data of deaths per million of population for a list of countries'''
@@ -86,8 +86,8 @@ def plot_countries_deaths_million(countries_info):
 	plt.semilogy()
 	plt.savefig('../data_plots/deaths_per_million.pdf')
 	plt.close()
-	
-	
+
+
 def plot_strong(daystot, Ns):
 	plt.figure()
 	plt.plot(np.arange(0,daystot+1), Ns["Healthy"], label='Healthy', color='green')
@@ -123,10 +123,12 @@ def plot_weak(daystot, Nw):
 	plt.savefig("../model_plots/weak_test.pdf")
 	plt.close()
 	print('Test run completed')
-	
-	
-def plot_country_evolution(daystot, first_death_day, countries_info, Nw):
-	x_vals = np.arange(0,daystot+1)+first_death_day
+
+
+def plot_country_evolution(daystot, countries_info, Nw):
+	first_death_data = next(x[0] for x in enumerate(countries_info[5]) if x[1] >= 1.0)
+	first_death_model = next(x[0] for x in enumerate(Nw["Dead"]) if x[1] >= 1.0)
+	x_vals = np.arange(0,daystot+1)+first_death_data-first_death_model
 	dates = np.arange(0,len(countries_info[2]))
 	plt.figure()
 	plt.plot(dates, countries_info[3], label='Confirmed Cases')
