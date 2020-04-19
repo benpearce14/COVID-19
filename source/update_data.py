@@ -19,8 +19,8 @@ wget.download('%s/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv
 wget.download('%s/csse_covid_19_time_series/time_series_covid19_deaths_US.csv' % url, '../raw_data/deaths_us.csv')
 
 all_confirmed = []
-confirmed_global = pd.read_csv('../raw_data/confirmed.csv', sep=',')
-confirmed_us = pd.read_csv('../raw_data/confirmed_us.csv', sep=',')
+confirmed_global = pd.read_csv('../raw_data/confirmed.csv', sort=False)
+confirmed_us = pd.read_csv('../raw_data/confirmed_us.csv', sort=False)
 all_confirmed.append(confirmed_global)
 all_confirmed.append(confirmed_us)
 merged_confirmed = pd.concat(all_confirmed)
@@ -30,8 +30,8 @@ print(confirmed_global.columns)
 print(confirmed_us.columns)
 
 all_deaths = []
-deaths_global = pd.read_csv('../raw_data/deaths.csv', sep=',')
-deaths_us = pd.read_csv('../raw_data/deaths_us.csv', sep=',')
+deaths_global = pd.read_csv('../raw_data/deaths.csv', sort=False)
+deaths_us = pd.read_csv('../raw_data/deaths_us.csv', sort=False)
 all_deaths.append(deaths_global)
 all_deaths.append(deaths_us)
 merged_deaths = pd.concat(all_deaths)
