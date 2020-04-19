@@ -2,7 +2,7 @@ import wget
 import os
 import pandas as pd
 
-if not len(os.listdir('../data/') ) == 0:
+if not len(os.listdir('../raw_data/') ) == 0:
     os.system('rm ../raw_data/*.csv')
 
 print('------------------------')
