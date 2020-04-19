@@ -27,7 +27,7 @@ confirmed_us.rename(columns = {'Long_':'Long'}, inplace = True)
 confirmed_us = confirmed_us.filter(confirmed_global.columns.tolist())
 all_confirmed.append(confirmed_global)
 all_confirmed.append(confirmed_us)
-merged_confirmed = pd.concat(all_confirmed, ignore_index=True, sort=False)
+merged_confirmed = pd.concat(all_confirmed, ignore_index=True, sort=False, axis=1)
 merged_confirmed.to_csv('../raw_data/confirmed.csv')
 
 all_deaths = []
