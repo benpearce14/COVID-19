@@ -13,13 +13,14 @@ def extract_countries(country_list):
 
     for i in range(len(country_list)):
         country_name = country_list[i]
+        print(data_populations['Combined_Key'].values.tolist().count(country_name))
         
         if data_populations['Combined_Key'].values.tolist().count(country_name) > 0 :
             selection_var = 'Province/State'
-            population = data_populations.loc[data_populations['Combined_Key'] == country_name]
+            population = data_populations.loc[data_populations['Province_State'] == country_name]
         else:
             selection_var = 'Country/Region'
-            population = data_populations.loc[data_populations['Province/State'] == country_name]
+            population = data_populations.loc[data_populations['Combined_Key'] == country_name]
             
         confirmed = data_confirmed.loc[data_confirmed[selection_var] == country_name]
         recovered = data_recovered.loc[data_recovered[selection_var] == country_name]
