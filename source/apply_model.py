@@ -20,9 +20,9 @@ D_C = 3
 D_S = 7
 
 daystot = 200
-Ns, Nw, delta_Ns, delta_Nw = CreateDataframes(pop, frac_fat, c_0, daystot)
+Ns, Nw, delta_Ns, delta_Nw = md.CreateDataframes(pop, frac_fat, c_0, daystot)
 for d in range(0, daystot):
-Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
+    Ns, Nw, delta_Ns, delta_Nw = md.PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 
 pr.plot_strong(daystot, Ns)
 pr.plot_weak(daystot, Nw)
