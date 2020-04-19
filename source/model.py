@@ -2,8 +2,9 @@ import numpy as np
 import pandas as pd
 
 import matplotlib
+import seaborn as sns
 matplotlib.use('agg')
-import matplotlib.pyplot as pyplot
+import matplotlib.pyplot as plt
 
 '''Define dataframe N such that there exists;
 "Healthy" - Those that are suseptable and previously unaffected,
@@ -122,37 +123,30 @@ if __name__ == '__main__':
 	for d in range(0, daystot):
 		Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 
-	#print(Ns)
-	#print(Nw)
+	plt.figure()
+	plt.plot(np.arange(0,daystot+1), Ns["Healthy"], label='Healthy', color='green')
+	plt.plot(np.arange(0,daystot+1), Ns["Incubating"], label='Incubating', color='orange')
+	plt.plot(np.arange(0,daystot+1), Ns["Contagious"], label='Contagious', color='pink')
+	plt.plot(np.arange(0,daystot+1), Ns["Symtomatic"], label='Symtomatic', color='red')
+	plt.plot(np.arange(0,daystot+1), Ns["Recovered"], label='Recovered', color='grey') 
+	plt.semilogy()
+	plt.xlabel('Days')
+	plt.ylabel('N')
+	plt.ylim([1,pop*1.1])
+	plt.legend(loc=2)
+	plt.savefig("../model_plots/strong_test.pdf")
+	plt.close()
 
-	pyplot.figure()
-	pyplot.close()
-
-	pyplot.figure()
-	pyplot.plot(np.arange(0,daystot+1), Ns["Healthy"], label='Healthy', color='green')
-	pyplot.plot(np.arange(0,daystot+1), Ns["Incubating"], label='Incubating', color='orange')
-	pyplot.plot(np.arange(0,daystot+1), Ns["Contagious"], label='Contagious', color='pink')
-	pyplot.plot(np.arange(0,daystot+1), Ns["Symtomatic"], label='Symtomatic', color='red')
-	pyplot.plot(np.arange(0,daystot+1), Ns["Recovered"], label='Recovered', color='grey') 
-	pyplot.yscale('log')
-	pyplot.xlabel('Time (days)')
-	pyplot.ylabel('Population')
-	pyplot.ylim([1,pop*1.1])
-	pyplot.legend()
-	pyplot.savefig("../model_plots/StrongTest.pdf")
-	pyplot.close()
-
-	pyplot.figure()
-	pyplot.plot(np.arange(0,daystot+1), Nw["Healthy"], label='Healthy', color='green')
-	pyplot.plot(np.arange(0,daystot+1), Nw["Incubating"], label='Incubating', color='orange')
-	pyplot.plot(np.arange(0,daystot+1), Nw["Contagious"], label='Contagious', color='pink')
-	pyplot.plot(np.arange(0,daystot+1), Nw["Symtomatic"], label='Symtomatic', color='red')
-	pyplot.plot(np.arange(0,daystot+1), Nw["Dead"], label='Dead', color='grey') 
-	pyplot.yscale('log')
-	pyplot.xlabel('Time (days)')
-	pyplot.ylabel('Population')
-	pyplot.ylim([1,pop*1.1])
-	pyplot.legend()
-	pyplot.legend()
-	pyplot.savefig("../model_plots/WeakTest.pdf")
-	pyplot.close()
+	plt.figure()
+	plt.plot(np.arange(0,daystot+1), Nw["Healthy"], label='Healthy', color='green')
+	plt.plot(np.arange(0,daystot+1), Nw["Incubating"], label='Incubating', color='orange')
+	plt.plot(np.arange(0,daystot+1), Nw["Contagious"], label='Contagious', color='pink')
+	plt.plot(np.arange(0,daystot+1), Nw["Symtomatic"], label='Symtomatic', color='red')
+	plt.plot(np.arange(0,daystot+1), Nw["Dead"], label='Dead', color='grey') 
+	plt.semilogy()
+	plt.xlabel('Days')
+	plt.ylabel('N')
+	plt.ylim([1,pop*1.1])
+	plt.legend(loc=2)
+	plt.savefig("../model_plots/weak_test.pdf")
+	plt.close()
