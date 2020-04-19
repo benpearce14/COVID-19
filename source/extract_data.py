@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 
-import plotting_routines as pr
 
 def extract_countries(country_list):
     '''Extract raw data for given list of countries'''
@@ -46,9 +45,15 @@ def extract_countries(country_list):
 
 if __name__ == '__main__':
     print("Run as test code")
+    import plotting_routines as pr
+    
     country_list = ['France', 'Germany', 'United Kingdom', 'China', 'US', \
                     'Korea, South', 'Italy', 'Spain']
     countries_info = extract_countries(country_list)
-    #print(countries_info)
+    
     pr.plot_countries(countries_info)
+    pr.plot_countries_confirmed_million(countries_info)
+    pr.plot_countries_recovered_million(countries_info)
+    pr.plot_countries_deaths_million(countries_info)
+    
     print("Test run completed")
