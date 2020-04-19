@@ -15,10 +15,6 @@ c_0 = 1
 k_s = 2.84
 k_w = k_s # For now
 
-D_I = 5
-D_C = 3
-D_S = 7
-
 daystot = 200
 Ns, Nw, delta_Ns, delta_Nw = md.CreateDataframes(pop, frac_fat, c_0, daystot)
 for d in range(0, daystot):
