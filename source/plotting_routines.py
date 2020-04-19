@@ -128,7 +128,7 @@ def plot_weak(daystot, Nw):
 def plot_country_evolution(daystot, countries_info, Nw):
 	first_death_data = next(x[0] for x in enumerate(countries_info[5]) if x[1] >= 5.0)
 	first_death_model = next(x[0] for x in enumerate(Nw["Dead"]) if x[1] >= 5.0)
-	print('First death (data): %s' % first_death_day)
+	print('First death (data): %s' % first_death_data)
 	print('First death (model): %s' % first_death_model)
 	x_vals = np.arange(0,daystot+1)+first_death_data-first_death_model
 	dates = np.arange(0,len(countries_info[2]))
