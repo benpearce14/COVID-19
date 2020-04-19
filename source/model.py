@@ -36,12 +36,12 @@ Sig_Sw: The 'dev' time for symptomatic period of the disease for the weak pop,
 
 D_I = 5.1 #Known
 Sig_I= 0.86 #Known
-D_C = 18.8
-Sig_C = 0.45
-D_Sw = 18.8 #Known
-Sig_Sw = 0.45 #Known
+D_C = 7
+Sig_C = 1/2
+D_Sw = 18.8 
+Sig_Sw = 1/2 
 D_Ss = 7
-Sig_Ss = 1
+Sig_Ss = 1/20
 
 def CreateDataframes(pop, frac_fat, c_0, days):
 	'''Create the required dataframes:
@@ -68,14 +68,14 @@ def CreateDataframes(pop, frac_fat, c_0, days):
 
 def Convolve(delta_N, d, a, scale):
 	'''Implement function to smear the time period of individuals in different phases of the disease'''
-	tau = 50
+	tau = 1000
 	sum=0
 	cumsum=0
 	for i in range(tau):
 		if d - i >= 0:
 			sum += stats.gamma.pdf(i, a=a, scale=scale)*delta_N[d-i]
 			cumsum += stats.gamma.pdf(i, a=a, scale=scale)
-			if cumsum > 0.99:
+			if cumsum > 0.999:
 				break
 	return sum
 
@@ -98,16 +98,16 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	delta_Ns["Incubating"][d] = ( k_s * Ns["Healthy"][d] * ( Ns["Contagious"][d] + Ns["Symtomatic"][d] + hide_factor * (Nw["Contagious"][d] + Nw["Symtomatic"][d])) / pop_alive )
 	delta_Nw["Incubating"][d] = ( k_w * Nw["Healthy"][d] * ( Ns["Contagious"][d] + Ns["Symtomatic"][d] + hide_factor * (Nw["Contagious"][d] + Nw["Symtomatic"][d])) / pop_alive )
 
-	delta_Ns["Contagious"][d] = Convolve(delta_Ns["Incubating"], d, a=D_I, scale=Sig_I)
-	delta_Nw["Contagious"][d] = Convolve(delta_Nw["Incubating"], d, a=D_I, scale=Sig_I)      
+	delta_Ns["Contagious"][d] = Convolve(delta_Ns["Incubating"], d, a=D_I*Sig_I, scale=1/Sig_I)
+	delta_Nw["Contagious"][d] = Convolve(delta_Nw["Incubating"], d, a=D_I*Sig_I, scale=1/Sig_I)      
 
 	#Need to think about this transition... 
-	delta_Ns["Symtomatic"][d] = Convolve(delta_Ns["Contagious"], d, a=D_C, scale=Sig_C)      
-	delta_Nw["Symtomatic"][d] = Convolve(delta_Nw["Contagious"], d, a=D_C, scale=Sig_C)      
+	delta_Ns["Symtomatic"][d] = Convolve(delta_Ns["Contagious"], d, a=D_C*Sig_C, scale=1/Sig_C)      
+	delta_Nw["Symtomatic"][d] = Convolve(delta_Nw["Contagious"], d, a=D_C*Sig_C, scale=1/Sig_C)      
 
 	#Need to think about this transition...
-	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, a=D_Ss, scale=Sig_Ss)      
-	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, a=D_Ss, scale=Sig_Sw)      
+	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, a=D_Ss*Sig_Ss, scale=1/Sig_Ss)      
+	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, a=D_Sw*Sig_Sw, scale=1/Sig_Sw)      
 
 	Ns["Healthy"][d+1] = max(Ns["Healthy"][d] - delta_Ns["Incubating"][d],0)
 	Ns["Incubating"][d+1] = max(Ns["Incubating"][d] + delta_Ns["Incubating"][d] - delta_Ns["Contagious"][d],0)
