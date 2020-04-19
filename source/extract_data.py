@@ -18,14 +18,11 @@ def extract_countries(country_list):
         if data_populations['Combined_Key'].values.tolist().count(country_name) == 0:
             selection_var = 'Province/State'
             population = data_populations.loc[data_populations['Province_State'] == country_name]
-            print(population)
-            population = data_populations.loc[data_populations['Admin2'].isnull()]
-            print(population)
+            population = population.loc[population['Admin2'].isnull()]
         else:
             selection_var = 'Country/Region'
             population = data_populations.loc[data_populations['Combined_Key'] == country_name]
         population = float(population.iloc[0,11])
-        print(population)
                                               
         confirmed = data_confirmed.loc[data_confirmed[selection_var] == country_name]
         recovered = data_recovered.loc[data_recovered[selection_var] == country_name]
