@@ -6,16 +6,16 @@ import model as md
 import plotting_routines as pr
 
 
-country_list = ['Italy']
+country_list = ['United Kingdom']
 countries_info = ed.extract_countries(country_list)
 
 pop = countries_info[0][1]
 
 frac_fat = 0.01
 c_0 = 0.402
-c_0 = 153.639
+#c_0 = 153.639
 k_s = 2.84
-k_s = 2.0376
+#k_s = 2.0376
 k_w = k_s # For now
 
 daystot = 200
