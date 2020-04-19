@@ -14,13 +14,13 @@ import matplotlib.pyplot as plt
 "Recovered" - Those that are immune,
 "Dead"- Those that have died.
 
-The Healthy class is divided into a weak and a strong class. 
+The Healthy class is divided into a weak and a strong class.
 	Those in the weak class will progress through the stages but will end dead.
 	Those in the strong class will progress through the stages but will end Recovered.
 
 Population parameters:
-pop: The population size 
-frac_fat: The proportion of the heathy population that will end up dead. Something only god knows. eg ~1 - 3% 
+pop: The population size
+frac_fat: The proportion of the heathy population that will end up dead. Something only god knows. eg ~1 - 3%
 c_0: The initial count of contagious people,
 k_s: Some arbitary lockdown parameter for the strong population
 k_w: Some arbitary lockdown parameter for the weak population
@@ -29,7 +29,7 @@ Disease parameters: (Global)
 D_I: The mean time for incubation period of the disease,
 D_C: The mean time for contagious period of the disease,
 D_S: The mean time for symptomatic period of the disease,
-''' 
+'''
 
 
 def CreateDataframes(pop, frac_fat, c_0, days):
@@ -37,11 +37,11 @@ def CreateDataframes(pop, frac_fat, c_0, days):
 		Ns: The strong population dataframe,
 		Nw: The weak population dataframe,
 		delta_Ns: The changes in strong population dataframe,
-		delta_Nw: The changes in weak population dataframe, 
+		delta_Nw: The changes in weak population dataframe,
 	'''
 	days = np.zeros(days)
 	ds = {'Healthy': days, 'Incubating': days, 'Contagious': days, 'Symtomatic': days, 'Recovered': days, 'Dead': days }
-	dw = {'Healthy': days, 'Incubating': days, 'Contagious': days, 'Symtomatic': days, 'Recovered': days, 'Dead': days }    
+	dw = {'Healthy': days, 'Incubating': days, 'Contagious': days, 'Symtomatic': days, 'Recovered': days, 'Dead': days }
 	Ns = pd.DataFrame(data=ds)
 	Nw = pd.DataFrame(data=dw)
 
@@ -61,13 +61,13 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 		Ns: The strong population dataframe,
 		Nw: The weak population dataframe,
 		delta_Ns: The changes in strong population dataframe,
-		delta_Nw: The changes in weak population dataframe, 
+		delta_Nw: The changes in weak population dataframe,
 		d: The day we have data for,
 		k_s: The strong lockdown parameter,
 		k_w: The weak lockdown parameter.
 	'''
 	strong_alive =Ns["Healthy"][d]+Ns["Incubating"][d]+Ns["Contagious"][d]+Ns["Symtomatic"][d]+Ns["Recovered"][d]
-	weak_alive =Nw["Healthy"][d]+Nw["Incubating"][d]+Nw["Contagious"][d]+Nw["Symtomatic"][d]+Nw["Recovered"][d] 
+	weak_alive =Nw["Healthy"][d]+Nw["Incubating"][d]+Nw["Contagious"][d]+Nw["Symtomatic"][d]+Nw["Recovered"][d]
 	pop_alive = strong_alive + weak_alive
 	hide_factor = 0.5
 
@@ -76,7 +76,7 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 
 	if d - D_I >= 0:
 		delta_Ns["Contagious"][d] = ( delta_Ns["Incubating"][d - D_I] )
-		delta_Nw["Contagious"][d] = ( delta_Nw["Incubating"][d - D_I] )     
+		delta_Nw["Contagious"][d] = ( delta_Nw["Incubating"][d - D_I] )
 
 	if d - D_C >= 0:
 		delta_Ns["Symtomatic"][d] = ( delta_Ns["Contagious"][d -D_C] )
@@ -128,7 +128,7 @@ if __name__ == '__main__':
 	plt.plot(np.arange(0,daystot+1), Ns["Incubating"], label='Incubating', color='orange')
 	plt.plot(np.arange(0,daystot+1), Ns["Contagious"], label='Contagious', color='pink')
 	plt.plot(np.arange(0,daystot+1), Ns["Symtomatic"], label='Symtomatic', color='red')
-	plt.plot(np.arange(0,daystot+1), Ns["Recovered"], label='Recovered', color='grey') 
+	plt.plot(np.arange(0,daystot+1), Ns["Recovered"], label='Recovered', color='grey')
 	plt.semilogy()
 	plt.xlabel('Days')
 	plt.ylabel('N')
@@ -143,7 +143,7 @@ if __name__ == '__main__':
 	plt.plot(np.arange(0,daystot+1), Nw["Incubating"], label='Incubating', color='orange')
 	plt.plot(np.arange(0,daystot+1), Nw["Contagious"], label='Contagious', color='pink')
 	plt.plot(np.arange(0,daystot+1), Nw["Symtomatic"], label='Symtomatic', color='red')
-	plt.plot(np.arange(0,daystot+1), Nw["Dead"], label='Dead', color='grey') 
+	plt.plot(np.arange(0,daystot+1), Nw["Dead"], label='Dead', color='grey')
 	plt.semilogy()
 	plt.xlabel('Days')
 	plt.ylabel('N')
@@ -152,3 +152,6 @@ if __name__ == '__main__':
 	plt.legend(loc=2)
 	plt.savefig("../model_plots/weak_test.pdf")
 	plt.close()
+
+        print(Test run completed)
+
