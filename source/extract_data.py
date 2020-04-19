@@ -13,9 +13,8 @@ def extract_countries(country_list):
 
     for i in range(len(country_list)):
         country_name = country_list[i]
-        print(data_populations['Combined_Key'].values.tolist().count(country_name))
         
-        if data_populations['Combined_Key'].values.tolist().count(country_name) > 0 :
+        if data_populations['Combined_Key'].values.tolist().count(country_name) == 0 :
             selection_var = 'Province/State'
             population = data_populations.loc[data_populations['Province_State'] == country_name]
         else:
