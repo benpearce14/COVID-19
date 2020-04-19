@@ -30,22 +30,23 @@ def extract_countries(country_list):
         print(country_name)
         print(confirmed)
         
-        if len(confirmed) > 1:
-            if len(confirmed[confirmed['Province/State'].isnull()]) > 0:
-                confirmed = confirmed[confirmed['Province/State'].isnull()]
-                recovered = recovered[recovered['Province/State'].isnull()]
-                deaths = deaths[deaths['Province/State'].isnull()]
+        if selection_var == 'Country/Region':
+            if len(confirmed) > 1:
+                if len(confirmed[confirmed['Province/State'].isnull()]) > 0:
+                    confirmed = confirmed[confirmed['Province/State'].isnull()]
+                    recovered = recovered[recovered['Province/State'].isnull()]
+                    deaths = deaths[deaths['Province/State'].isnull()]
+                    confirmed = confirmed.iloc[0,4:].values
+                    recovered = recovered.iloc[0,4:].values
+                    deaths = deaths.iloc[0,4:].values
+                else:
+                    confirmed = confirmed.sum().tolist()[4:]
+                    recovered = recovered.sum().tolist()[4:]
+                    deaths = deaths.sum().tolist()[4:]
+            else:
                 confirmed = confirmed.iloc[0,4:].values
                 recovered = recovered.iloc[0,4:].values
                 deaths = deaths.iloc[0,4:].values
-            else:
-                confirmed = confirmed.sum().tolist()[4:]
-                recovered = recovered.sum().tolist()[4:]
-                deaths = deaths.sum().tolist()[4:]
-        else:
-            confirmed = confirmed.iloc[0,4:].values
-            recovered = recovered.iloc[0,4:].values
-            deaths = deaths.iloc[0,4:].values
 
         countries_info.append([country_name, population, np.asarray(dates), np.asarray(confirmed), \
                                np.asarray(recovered), np.asarray(deaths)])
