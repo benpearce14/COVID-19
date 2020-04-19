@@ -12,7 +12,7 @@ Please see reference/references.pdf for the aditional details.
 Info:
 -----
 
-1. Day 0 = March 22nd 2020.
+1. Day 0 = January 22nd 2020.
 
 Usage:
 ------
