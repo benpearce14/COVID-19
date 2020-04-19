@@ -44,7 +44,9 @@ def extract_countries(country_list):
                      recovered = recovered.sum().tolist()[4:]
                      deaths = deaths.sum().tolist()[4:]
              else:
-                
+                confirmed = confirmed.iloc[0,4:].values
+                recovered = recovered.iloc[0,4:].values
+                deaths = deaths.iloc[0,4:].values     
         else:
             confirmed = confirmed.iloc[0,4:].values
             recovered = recovered.iloc[0,4:].values
