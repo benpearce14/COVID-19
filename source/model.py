@@ -94,16 +94,16 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	delta_Ns["Incubating"][d] = ( k_s * Ns["Healthy"][d] * ( Ns["Contagious"][d] + Ns["Symtomatic"][d] + hide_factor * (Nw["Contagious"][d] + Nw["Symtomatic"][d])) / pop_alive )
 	delta_Nw["Incubating"][d] = ( k_w * Nw["Healthy"][d] * ( Ns["Contagious"][d] + Ns["Symtomatic"][d] + hide_factor * (Nw["Contagious"][d] + Nw["Symtomatic"][d])) / pop_alive )
 
-	delta_Ns["Contagious"][d] = Convolve(delta_Ns["Incubating"], d, mean=D_I, dev=Sig_I)
-	delta_Nw["Contagious"][d] = Convolve(delta_Nw["Incubating"], d, mean=D_I, dev=Sig_I)      
+	delta_Ns["Contagious"][d] = Convolve(delta_Ns["Incubating"], d, a=D_I, scale=Sig_I)
+	delta_Nw["Contagious"][d] = Convolve(delta_Nw["Incubating"], d, a=D_I, scale=Sig_I)      
 
 	#Need to think about this transition... 
-	delta_Ns["Symtomatic"][d] = Convolve(delta_Ns["Contagious"], d, mean=D_C, dev=Sig_C)      
-	delta_Nw["Symtomatic"][d] = Convolve(delta_Nw["Contagious"], d, mean=D_C, dev=Sig_C)      
+	delta_Ns["Symtomatic"][d] = Convolve(delta_Ns["Contagious"], d, a=D_C, scale=Sig_C)      
+	delta_Nw["Symtomatic"][d] = Convolve(delta_Nw["Contagious"], d, a=D_C, scale=Sig_C)      
 
 	#Need to think about this transition...
-	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, mean=D_Ss, dev=Sig_Ss)      
-	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, mean=D_Ss, dev=Sig_Sw)      
+	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, a=D_Ss, scale=Sig_Ss)      
+	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, a=D_Ss, scale=Sig_Sw)      
 
 
 	#print(delta_Ns_Incubating, delta_Ns_Contagious, delta_Ns_Symtomatic, delta_Ns_Recovered)
