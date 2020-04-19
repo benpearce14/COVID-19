@@ -22,8 +22,9 @@ daystot = 200
 Ns, Nw, delta_Ns, delta_Nw = md.CreateDataframes(pop, frac_fat, c_0, daystot)
 for d in range(0, daystot):
 	if d > 37:
-		k_s = 0.682
+		k_s = 10.
 		k_w = k_s
+		print('k changed', d)
 	Ns, Nw, delta_Ns, delta_Nw = md.PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 
 pr.plot_country_evolution(daystot, countries_info[0], Nw)
