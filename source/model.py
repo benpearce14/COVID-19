@@ -99,15 +99,15 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	delta_Nw["Incubating"][d] = ( k_w * Nw["Healthy"][d] * ( Ns["Contagious"][d] + Ns["Symtomatic"][d] + hide_factor * (Nw["Contagious"][d] + Nw["Symtomatic"][d])) / pop_alive )
 
 	delta_Ns["Contagious"][d] = Convolve(delta_Ns["Incubating"], d, a=D_I, scale=Sig_I)
-	delta_Nw["Contagious"][d] = Convolve(delta_Nw["Incubating"], d, a=D_I, scale=Sig_I)      
-
-	#Need to think about this transition... 
-	delta_Ns["Symtomatic"][d] = Convolve(delta_Ns["Contagious"], d, a=D_C, scale=Sig_C)      
-	delta_Nw["Symtomatic"][d] = Convolve(delta_Nw["Contagious"], d, a=D_C, scale=Sig_C)      
+	delta_Nw["Contagious"][d] = Convolve(delta_Nw["Incubating"], d, a=D_I, scale=Sig_I)
 
 	#Need to think about this transition...
-	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, a=D_Ss, scale=Sig_Ss)      
-	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, a=D_Ss, scale=Sig_Sw)      
+	delta_Ns["Symtomatic"][d] = Convolve(delta_Ns["Contagious"], d, a=D_C, scale=Sig_C)
+	delta_Nw["Symtomatic"][d] = Convolve(delta_Nw["Contagious"], d, a=D_C, scale=Sig_C)
+
+	#Need to think about this transition...
+	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, a=D_Ss, scale=Sig_Ss)
+	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, a=D_Ss, scale=Sig_Sw)
 
 	Ns["Healthy"][d+1] = max(Ns["Healthy"][d] - delta_Ns["Incubating"][d],0)
 	Ns["Incubating"][d+1] = max(Ns["Incubating"][d] + delta_Ns["Incubating"][d] - delta_Ns["Contagious"][d],0)
@@ -136,7 +136,7 @@ def RunModel(days=200,pop=66.4e6,frac_fat=0.01,c_0=0.402, k_s=2.84, k_w=2.84):
 if __name__ == '__main__':
 	print("Run as test code")
 	import plotting_routines as pr
-	
+
 	#Define test variables:
 	daystot=200
 	Ns, Nw = RunModel(days=daystot)
