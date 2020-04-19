@@ -121,4 +121,4 @@ if __name__ == '__main__':
 		Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 
 	pr.plot_strong(daystot, Ns)
-	pr.plot_weak(daystot, Ns)
+	pr.plot_weak(daystot, Nw)
