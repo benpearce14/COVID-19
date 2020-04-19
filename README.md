@@ -13,3 +13,4 @@ Usage:
 ------
 
 1. To update data run the script source/update_data.py
+2. To extract raw data for a list of countries, use the extract_countries function in source/extract_data.py
