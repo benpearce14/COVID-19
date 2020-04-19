@@ -22,8 +22,6 @@ def extract_countries(country_list):
             selection_var = 'Country/Region'
             population = data_populations.loc[data_populations['Combined_Key'] == country_name]
             population = float(population.iloc[0,11])
-            
-        print(data_confirmed[selection_var].values)
         
         confirmed = data_confirmed.loc[data_confirmed[selection_var] == country_name]
         recovered = data_recovered.loc[data_recovered[selection_var] == country_name]
@@ -51,7 +49,7 @@ def extract_countries(country_list):
             if len(confirmed) > 1:
                 confirmed = confirmed.sum().tolist()[4:]
                 print(confirmed['Country/Region'].values.tolist())
-                if confirmed['Country/Region'].values.tolist().contains('US'):
+                if deaths['Country/Region'].values.tolist().contains('US'):
                     recovered = [0]*len(dates)
                 else:
                     recovered = recovered.sum().tolist()[4:]
