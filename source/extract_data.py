@@ -12,6 +12,7 @@ def extract_countries(country_list):
     countries_info = []
 
     for i in range(len(country_list)):
+        country_name = country_list[i]
         
         if data_populations['Combined_Key'].values.tolist().count(country_name) > 0 :
             selection_var = ['Province/State']
@@ -20,7 +21,6 @@ def extract_countries(country_list):
             selection_var = ['Country/Region']
             population = data_populations.loc[data_populations['Province/State'] == country_name]
             
-        country_name = country_list[i]
         confirmed = data_confirmed.loc[data_confirmed[selection_var] == country_name]
         recovered = data_recovered.loc[data_recovered[selection_var] == country_name]
         deaths = data_deaths.loc[data_deaths[selection_var] == country_name]
