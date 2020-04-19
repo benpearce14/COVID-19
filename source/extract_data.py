@@ -28,6 +28,7 @@ def extract_countries(country_list):
         dates = confirmed.columns.values.tolist()[4:]
         
         print(country_name)
+        print(population)
         print(confirmed)
 
         if len(confirmed) > 1:
