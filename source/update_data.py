@@ -21,23 +21,21 @@ wget.download('%s/csse_covid_19_time_series/time_series_covid19_deaths_US.csv' %
 all_confirmed = []
 confirmed_global = pd.read_csv('../raw_data/confirmed.csv')
 confirmed_us = pd.read_csv('../raw_data/confirmed_us.csv')
-
 confirmed_us.rename(columns = {'Country_Region':'Country/Region'}, inplace = True) 
 confirmed_us.rename(columns = {'Province_State':'Province/State'}, inplace = True) 
 confirmed_us.rename(columns = {'Long_':'Long'}, inplace = True) 
-
 confirmed_us = confirmed_us.filter(confirmed_global.columns.tolist())
 all_confirmed.append(confirmed_global)
 all_confirmed.append(confirmed_us)
 merged_confirmed = pd.concat(all_confirmed, ignore_index=True, sort=False)
 merged_confirmed.to_csv('../raw_data/confirmed.csv')
 
-print(confirmed_global.columns)
-print(confirmed_us.columns)
-
 all_deaths = []
 deaths_global = pd.read_csv('../raw_data/deaths.csv')
 deaths_us = pd.read_csv('../raw_data/deaths_us.csv')
+deaths_us.rename(columns = {'Country_Region':'Country/Region'}, inplace = True) 
+deaths_us.rename(columns = {'Province_State':'Province/State'}, inplace = True) 
+deaths_us.rename(columns = {'Long_':'Long'}, inplace = True) 
 deaths_us = deaths_us.filter(deaths_global.columns.tolist())
 all_deaths.append(deaths_global)
 all_deaths.append(deaths_us)
