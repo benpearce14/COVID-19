@@ -36,8 +36,8 @@ Sig_Sw: The 'dev' time for symptomatic period of the disease for the weak pop,
 
 D_I = 5.1 #Known
 Sig_I= 0.86 #Known
-D_C = 1 
-Sig_C = 1 
+D_C = 18.8
+Sig_C = 0.45
 D_Sw = 18.8 #Known
 Sig_Sw = 0.45 #Known
 D_Ss = 7
@@ -68,11 +68,15 @@ def CreateDataframes(pop, frac_fat, c_0, days):
 
 def Convolve(delta_N, d, a, scale):
 	'''Implement function to smear the time period of individuals in different phases of the disease'''
-	tau = 200
+	tau = 50
 	sum=0
+	cumsum=0
 	for i in range(tau):
 		if d - i >= 0:
 			sum += stats.gamma.pdf(i, a=a, scale=scale)*delta_N[d-i]
+			cumsum += stats.gamma.pdf(i, a=a, scale=scale)
+			if cumsum > 0.99:
+				break
 	return sum
 
 
@@ -105,8 +109,6 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 	delta_Ns["Recovered"][d] = Convolve(delta_Ns["Symtomatic"], d, a=D_Ss, scale=Sig_Ss)      
 	delta_Nw["Dead"][d] = Convolve(delta_Nw["Symtomatic"], d, a=D_Ss, scale=Sig_Sw)      
 
-
-	#print(delta_Ns_Incubating, delta_Ns_Contagious, delta_Ns_Symtomatic, delta_Ns_Recovered)
 	Ns["Healthy"][d+1] = max(Ns["Healthy"][d] - delta_Ns["Incubating"][d],0)
 	Ns["Incubating"][d+1] = max(Ns["Incubating"][d] + delta_Ns["Incubating"][d] - delta_Ns["Contagious"][d],0)
 	Ns["Contagious"][d+1] = max(Ns["Contagious"][d] + delta_Ns["Contagious"][d] - delta_Ns["Symtomatic"][d],0)
