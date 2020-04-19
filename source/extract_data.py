@@ -9,6 +9,7 @@ def extract_countries(country_list):
     data_confirmed = pd.read_csv('../raw_data/confirmed.csv')
     data_recovered = pd.read_csv('../raw_data/recovered.csv')
     data_deaths = pd.read_csv('../raw_data/deaths.csv')
+    
     countries_info = []
 
     for i in range(len(country_list)):
