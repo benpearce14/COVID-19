@@ -134,7 +134,7 @@ def plot_country_evolution(daystot, first_death_day, countries_info, Nw):
 	plt.plot(x_vals, Nw["Dead"], label='Modelled Deaths')
 	plt.title('%s' % countries_info[0])
 	plt.ylim(1)
-	plt.xlim(0, max(x_vals))
+	plt.xlim(0, 100)
 	plt.xlabel('Days')
 	plt.ylabel('N')
 	plt.legend(loc='best', fontsize=8)
