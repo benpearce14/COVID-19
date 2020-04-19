@@ -1,10 +1,7 @@
 import numpy as np
 import pandas as pd
 
-import matplotlib
-import seaborn as sns
-matplotlib.use('agg')
-import matplotlib.pyplot as plt
+import plotting_routines as pr
 
 '''Define dataframe N such that there exists;
 "Healthy" - Those that are suseptable and previously unaffected,
@@ -123,33 +120,5 @@ if __name__ == '__main__':
 	for d in range(0, daystot):
 		Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 
-	plt.figure()
-	plt.plot(np.arange(0,daystot+1), Ns["Healthy"], label='Healthy', color='green')
-	plt.plot(np.arange(0,daystot+1), Ns["Incubating"], label='Incubating', color='orange')
-	plt.plot(np.arange(0,daystot+1), Ns["Contagious"], label='Contagious', color='pink')
-	plt.plot(np.arange(0,daystot+1), Ns["Symtomatic"], label='Symtomatic', color='red')
-	plt.plot(np.arange(0,daystot+1), Ns["Recovered"], label='Recovered', color='grey')
-	plt.semilogy()
-	plt.xlabel('Days')
-	plt.ylabel('N')
-	plt.xlim(0, daystot)
-	plt.ylim(1)
-	plt.legend(loc=2)
-	plt.savefig("../model_plots/strong_test.pdf")
-	plt.close()
-
-	plt.figure()
-	plt.plot(np.arange(0,daystot+1), Nw["Healthy"], label='Healthy', color='green')
-	plt.plot(np.arange(0,daystot+1), Nw["Incubating"], label='Incubating', color='orange')
-	plt.plot(np.arange(0,daystot+1), Nw["Contagious"], label='Contagious', color='pink')
-	plt.plot(np.arange(0,daystot+1), Nw["Symtomatic"], label='Symtomatic', color='red')
-	plt.plot(np.arange(0,daystot+1), Nw["Dead"], label='Dead', color='grey')
-	plt.semilogy()
-	plt.xlabel('Days')
-	plt.ylabel('N')
-	plt.xlim(0, daystot)
-	plt.ylim(1)
-	plt.legend(loc=2)
-	plt.savefig("../model_plots/weak_test.pdf")
-	plt.close()
-	print('Test run completed')
+	pr.plot_strong(daystot, Ns)
+	pr.plot_weak(daystot, Ns)
