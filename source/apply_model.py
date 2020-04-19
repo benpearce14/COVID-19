@@ -22,4 +22,4 @@ Ns, Nw, delta_Ns, delta_Nw = md.CreateDataframes(pop, frac_fat, c_0, daystot)
 for d in range(0, daystot):
     Ns, Nw, delta_Ns, delta_Nw = md.PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 
-pr.plot_country_evolution(daystot, first_death_day, countries_info, Nw)
+pr.plot_country_evolution(daystot, first_death_day, countries_info[0], Nw)
