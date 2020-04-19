@@ -24,9 +24,6 @@ for d in range(0, daystot):
 	if d > 37:
 		k_s = 0.682
 		k_w = k_s
-	if d > 52:
-		k_s = 0.026
-		k_w = k_s
 	Ns, Nw, delta_Ns, delta_Nw = md.PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
 
 pr.plot_country_evolution(daystot, countries_info[0], Nw)
