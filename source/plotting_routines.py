@@ -35,7 +35,7 @@ def plot_countries_confirmed_million(countries_info):
 		print('No countries in list specified or error in list.')
 		return
 	for i in range(len(countries_info)):
-		plt.plot(x_vals, countries_info[i][3]*10e6/countries_info[i][1], label=country_info[i][0])
+		plt.plot(x_vals, countries_info[i][3]*10e6/countries_info[i][1], label=countries_info[i][0])
 		plt.title('Confirmed Cases (per million)')
 	plt.xlim(0,max(x_vals))
 	plt.xlabel('Days')
@@ -56,7 +56,7 @@ def plot_countries_recovered_million(countries_info):
 		print('No countries in list specified or error in list.')
 		return
 	for i in range(len(countries_info)):
-		plt.plot(x_vals, countries_info[i][4]*10e6/countries_info[i][1], label=country_info[i][0])
+		plt.plot(x_vals, countries_info[i][4]*10e6/countries_info[i][1], label=countries_info[i][0])
 		plt.title('Recoveries (per million)')
 	plt.xlim(0,max(x_vals))
 	plt.xlabel('Days')
@@ -77,7 +77,7 @@ def plot_countries_deaths_million(countries_info):
 		print('No countries in list specified or error in list.')
 		return
 	for i in range(len(countries_info)):
-		plt.plot(x_vals, countries_info[i][5]*10e6/countries_info[i][1], label=country_info[i][0])
+		plt.plot(x_vals, countries_info[i][5]*10e6/countries_info[i][1], label=countries_info[i][0])
 		plt.title('Deaths (per million)')
 	plt.xlim(0,max(x_vals))
 	plt.xlabel('Days')
