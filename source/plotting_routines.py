@@ -23,6 +23,69 @@ def plot_countries(countries_info):
 		plt.semilogy()
 		plt.savefig('../data_plots/%s.pdf' % countries_info[i][0])
 		plt.close()
+
+		
+def plot_countries_confirmed_million(countries_info):
+	'''Plot raw data of confirmed cases per million of population for a list of countries'''
+	try:
+		dates = countries_info[0][2]
+		x_vals = np.arange(0,len(dates))
+		plt.figure()
+	except:
+		print('No countries in list specified or error in list.')
+		return
+	for i in range(len(countries_info)):
+		plt.plot(x_vals, countries_info[i][3]*10e6/counries_info[i][1], label=country_info[i][0])
+		plt.title('Confirmed Cases (per million)')
+	plt.xlim(0,max(x_vals))
+	plt.xlabel('Days')
+	plt.ylabel('N')
+	plt.legend(loc='best', fontsize=8)
+	plt.semilogy()
+	plt.savefig('../data_plots/confirmed_per_million.pdf')
+	plt.close()
+	
+	
+def plot_countries_recovered_million(countries_info):
+	'''Plot raw data of recoveries per million of population for a list of countries'''
+	try:
+		dates = countries_info[0][2]
+		x_vals = np.arange(0,len(dates))
+		plt.figure()
+	except:
+		print('No countries in list specified or error in list.')
+		return
+	for i in range(len(countries_info)):
+		plt.plot(x_vals, countries_info[i][4]*10e6/counries_info[i][1], label=country_info[i][0])
+		plt.title('Recoveries (per million)')
+	plt.xlim(0,max(x_vals))
+	plt.xlabel('Days')
+	plt.ylabel('N')
+	plt.legend(loc='best', fontsize=8)
+	plt.semilogy()
+	plt.savefig('../data_plots/recovered_per_million.pdf')
+	plt.close()
+	
+
+def plot_countries_deaths_million(countries_info):
+	'''Plot raw data of deaths per million of population for a list of countries'''
+	try:
+		dates = countries_info[0][2]
+		x_vals = np.arange(0,len(dates))
+		plt.figure()
+	except:
+		print('No countries in list specified or error in list.')
+		return
+	for i in range(len(countries_info)):
+		plt.plot(x_vals, countries_info[i][5]*10e6/counries_info[i][1], label=country_info[i][0])
+		plt.title('Deaths (per million)')
+	plt.xlim(0,max(x_vals))
+	plt.xlabel('Days')
+	plt.ylabel('N')
+	plt.legend(loc='best', fontsize=8)
+	plt.semilogy()
+	plt.savefig('../data_plots/deaths_per_million.pdf')
+	plt.close()
 	
 	
 def plot_strong(daystot, Ns):
