@@ -20,18 +20,18 @@ wget.download('%s/csse_covid_19_time_series/time_series_covid19_deaths_US.csv' %
 
 all_confirmed = []
 confirmed_global = pd.read_csv('../raw_data/confirmed.csv', sep=',')
-confirmed_us = pd.read_csv('../raw_data/confirmed.csv', sep=',')
+confirmed_us = pd.read_csv('../raw_data/confirmed_us.csv', sep=',')
 all_confirmed.append(confirmed_global)
 all_confirmed.append(confirmed_us)
-merged_confirmed = pd.concat(all_confirmed, ignore_index=True, sort=True)
+merged_confirmed = pd.concat(all_confirmed)
 merged_confirmed.to_csv('../raw_data/confirmed.csv')
 
 all_deaths = []
 deaths_global = pd.read_csv('../raw_data/deaths.csv', sep=',')
-deaths_us = pd.read_csv('../raw_data/deaths.csv', sep=',')
+deaths_us = pd.read_csv('../raw_data/deaths_us.csv', sep=',')
 all_deaths.append(deaths_global)
 all_deaths.append(deaths_us)
-merged_deaths = pd.concat(all_deaths, ignore_index=True, sort=True)
+merged_deaths = pd.concat(all_deaths)
 merged_deaths.to_csv('../raw_data/deaths.csv')
 
 print('\n----------------------')
