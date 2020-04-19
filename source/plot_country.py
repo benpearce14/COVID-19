@@ -4,44 +4,53 @@ import numpy as np
 import pandas as pd
 import sys
 
-country_name = str(sys.argv[1])
+country_list = ["France", "Germany"]
 
-data_populations = pd.read_csv('../data/populations.csv')
-data_confirmed = pd.read_csv('../data/confirmed.csv')
-data_recovered = pd.read_csv('../data/recovered.csv')
-data_deaths = pd.read_csv('../data/deaths.csv')
+def extract_country(country_list):
 
-country_population = data_populations.loc[data_populations['Combined_Key'] == country_name]
-country_confirmed = data_confirmed.loc[data_confirmed['Country/Region'] == country_name]
-country_recovered = data_recovered.loc[data_recovered['Country/Region'] == country_name]
-country_deaths = data_deaths.loc[data_deaths['Country/Region'] == country_name]
+    data_populations = pd.read_csv('../data/populations.csv')
+    data_confirmed = pd.read_csv('../data/confirmed.csv')
+    data_recovered = pd.read_csv('../data/recovered.csv')
+    data_deaths = pd.read_csv('../data/deaths.csv')
+    countries_info = []
 
-country_population = int(country_population.iloc[0,11])
-dates = country_confirmed.columns.values.tolist()[4:]
+    for i in range(len(country_list)):
+        population = data_populations.loc[data_populations['Combined_Key'] == country_name]
+        confirmed = data_confirmed.loc[data_confirmed['Country/Region'] == country_name]
+        recovered = data_recovered.loc[data_recovered['Country/Region'] == country_name]
+        deaths = data_deaths.loc[data_deaths['Country/Region'] == country_name]
+    
+        population = int(population.iloc[0,11])
+        dates = confirmed.columns.values.tolist()[4:]
 
-if len(country_confirmed) > 1:
-    if len(country_confirmed[country_confirmed['Province/State'].isnull()]) > 0:
-        country_confirmed = country_confirmed[country_confirmed['Province/State'].isnull()]
-        country_recovered = country_recovered[country_recovered['Province/State'].isnull()]
-        country_deaths = country_deaths[country_deaths['Province/State'].isnull()]
-        country_confirmed = country_confirmed.iloc[0,4:].values
-        country_recovered = country_recovered.iloc[0,4:].values
-        country_deaths = country_deaths.iloc[0,4:].values
-    else:
-        country_confirmed = country_confirmed.sum().tolist()[4:]
-        country_recovered = country_recovered.sum().tolist()[4:]
-        country_deaths = country_deaths.sum().tolist()[4:]
-else:
-    country_confirmed = country_confirmed.iloc[0,4:].values
-    country_recovered = country_recovered.iloc[0,4:].values
-    country_deaths = country_deaths.iloc[0,4:].values
-
-print(country_name)
+        if len(confirmed) > 1:
+            if len(confirmed[confirmed['Province/State'].isnull()]) > 0:
+                confirmed = confirmed[confirmed['Province/State'].isnull()]
+                recovered = recovered[recovered['Province/State'].isnull()]
+                deaths = deaths[deaths['Province/State'].isnull()]
+                confirmed = confirmed.iloc[0,4:].values
+                recovered = recovered.iloc[0,4:].values
+                deaths = deaths.iloc[0,4:].values
+            else:
+                confirmed = confirmed.sum().tolist()[4:]
+                recovered = recovered.sum().tolist()[4:]
+                deaths = deaths.sum().tolist()[4:]
+        else:
+            confirmed = confirmed.iloc[0,4:].values
+            recovered = recovered.iloc[0,4:].values
+            deaths = deaths.iloc[0,4:].values
+    
+    countries_info.append([country_name, population, confirmed, recovered, deaths])
+    return countries_info
+        
+'''print(country_name)
 print(country_population)
 print(len(dates))
 print(len(country_confirmed))
 print(len(country_recovered))
-print(len(country_deaths))
+print(len(country_deaths))'''
+
+print(countries_info)
 
 x_vals = np.arange(0,len(dates))
 plt.figure()
