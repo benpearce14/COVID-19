@@ -28,8 +28,8 @@ D_S: The mean time for symptomatic period of the disease,
 '''
 
 D_I = 5
-D_C = 3
-D_S = 7
+D_C = 0
+D_S = 5
 
 
 def CreateDataframes(pop, frac_fat, c_0, days):
@@ -88,21 +88,28 @@ def PredictNextDay(Ns, Nw, delta_Ns, delta_Nw, d, k_s, k_w):
 
 
 	#print(delta_Ns_Incubating, delta_Ns_Contagious, delta_Ns_Symtomatic, delta_Ns_Recovered)
-	Ns["Healthy"][d+1] = Ns["Healthy"][d] - delta_Ns["Incubating"][d]
-	Ns["Incubating"][d+1] = Ns["Incubating"][d] + delta_Ns["Incubating"][d] - delta_Ns["Contagious"][d]
-	Ns["Contagious"][d+1] = Ns["Contagious"][d] + delta_Ns["Contagious"][d] - delta_Ns["Symtomatic"][d]
+	Ns["Healthy"][d+1] = max(Ns["Healthy"][d] - delta_Ns["Incubating"][d],0)
+	Ns["Incubating"][d+1] = max(Ns["Incubating"][d] + delta_Ns["Incubating"][d] - delta_Ns["Contagious"][d],0)
+	Ns["Contagious"][d+1] = max(Ns["Contagious"][d] + delta_Ns["Contagious"][d] - delta_Ns["Symtomatic"][d],0)
 
 
-	Nw["Healthy"][d+1] = Nw["Healthy"][d] - delta_Nw["Incubating"][d]
-	Nw["Incubating"][d+1] = Nw["Incubating"][d] + delta_Nw["Incubating"][d] - delta_Nw["Contagious"][d]
-	Nw["Contagious"][d+1] = Nw["Contagious"][d] + delta_Nw["Contagious"][d] - delta_Nw["Symtomatic"][d]
+	Nw["Healthy"][d+1] = max(Nw["Healthy"][d] - delta_Nw["Incubating"][d],0)
+	Nw["Incubating"][d+1] = max(Nw["Incubating"][d] + delta_Nw["Incubating"][d] - delta_Nw["Contagious"][d],0)
+	Nw["Contagious"][d+1] = max(Nw["Contagious"][d] + delta_Nw["Contagious"][d] - delta_Nw["Symtomatic"][d],0)
 
-	Ns["Symtomatic"][d+1] = Ns["Symtomatic"][d] + delta_Ns["Symtomatic"][d] - delta_Ns["Recovered"][d]
-	Ns["Recovered"][d+1] = Ns["Recovered"][d] + delta_Ns["Recovered"][d]
+	Ns["Symtomatic"][d+1] = max(Ns["Symtomatic"][d] + delta_Ns["Symtomatic"][d] - delta_Ns["Recovered"][d],0)
+	Ns["Recovered"][d+1] = max(Ns["Recovered"][d] + delta_Ns["Recovered"][d],0)
 
-	Nw["Symtomatic"][d+1] = Nw["Symtomatic"][d] + delta_Nw["Symtomatic"][d] - delta_Nw["Dead"][d]
-	Nw["Dead"][d+1] = Nw["Dead"][d] + delta_Nw["Dead"][d]
+	Nw["Symtomatic"][d+1] = max(Nw["Symtomatic"][d] + delta_Nw["Symtomatic"][d] - delta_Nw["Dead"][d],0)
+	Nw["Dead"][d+1] = max(Nw["Dead"][d] + delta_Nw["Dead"][d],0)
 	return Ns, Nw, delta_Ns, delta_Nw
+
+def RunModel(days=200,pop=66.4e6,frac_fat=0.01,c_0=0.402, k_s=2.84, k_w=2.84):
+	'''Run the model for the custom parameters provided'''
+	Ns, Nw, delta_Ns, delta_Nw = CreateDataframes(pop, frac_fat, c_0, daystot)
+	for d in range(0, daystot):
+		Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
+	return Ns, Nw
 
 
 if __name__ == '__main__':
@@ -110,20 +117,9 @@ if __name__ == '__main__':
 	import plotting_routines as pr
 	
 	#Define test variables:
-	pop = 1e7
-	frac_fat = 0.01
-	c_0 = 1
-	k_s = 0.5
-	k_w = k_s # For now
-
-	D_I = 5
-	D_C = 3
-	D_S = 7
-
-	daystot = 200
-	Ns, Nw, delta_Ns, delta_Nw = CreateDataframes(pop, frac_fat, c_0, daystot)
-	for d in range(0, daystot):
-		Ns, Nw, delta_Ns, delta_Nw = PredictNextDay(Ns,Nw, delta_Ns, delta_Nw ,d, k_s, k_w)
+	daystot=200
+	Ns, Nw = RunModel(days=daystot)
+	print(Ns)
 
 	pr.plot_strong(daystot, Ns)
 	pr.plot_weak(daystot, Nw)
