@@ -13,8 +13,9 @@ pop = countries_info[0][1]
 
 frac_fat = 0.01
 c_0 = 0.402
+#c_0 = 0.8
 k_s = 2.84
-k_s = 2.
+#k_s = 2.
 k_w = k_s # For now
 
 daystot = 200
