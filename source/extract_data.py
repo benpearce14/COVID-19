@@ -48,7 +48,7 @@ def extract_countries(country_list):
         else:
             if len(confirmed) > 1:
                 confirmed = confirmed.sum().tolist()[4:]
-                if deaths['Country/Region'].values.tolist().contains('US'):
+                if deaths['Country/Region'].values.tolist().count('US') > 0:
                     recovered = [0]*len(dates)
                 else:
                     recovered = recovered.sum().tolist()[4:]
