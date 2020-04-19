@@ -15,10 +15,10 @@ def extract_countries(country_list):
     for i in range(len(country_list)):
         country_name = country_list[i]
         
-        if data_populations['Combined_Key'].values.tolist().count(country_name) == 0 :
+        if data_populations['Combined_Key'].values.tolist().count(country_name) == 0:
             selection_var = 'Province/State'
             population = data_populations.loc[data_populations['Province_State'] == country_name]
-            population = data_populations.loc[data_populations['Admin2'].isnull()
+            population = data_populations.loc[data_populations['Admin2'].isnull()]
         else:
             selection_var = 'Country/Region'
             population = data_populations.loc[data_populations['Combined_Key'] == country_name]
